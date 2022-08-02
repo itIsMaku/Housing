@@ -1,0 +1,47 @@
+plugins {
+    id 'java'
+}
+
+group 'cz.maku'
+version '0.1-beta'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://repo.codemc.io/repository/maven-public/' }
+    maven {
+        url 'https://repo.repsy.io/mvn/itismaku/private/'
+        credentials {
+            username repsyUsername
+            password repsyPassword
+        }
+    }
+    maven {
+        url 'https://repo.repsy.io/mvn/itismaku/github/'
+    }
+    maven { url 'https://jitpack.io' }
+    maven { url = 'https://repo.glaremasters.me/repository/concuncan/' }
+}
+
+dependencies {
+    implementation 'com.google.guava:guava:31.1-jre'
+    implementation 'org.jetbrains:annotations:23.0.0'
+
+    implementation 'cz.maku:SpigotContainers:1.0-SNAPSHOT'
+    implementation 'cz.maku:Mommons:1.1'
+    annotationProcessor 'cz.maku:Mommons:1.1'
+    implementation 'com.github.ZorTik:ContainrGUI:0.1.7'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.spigotmc:spigot-api:1.19-R0.1-SNAPSHOT'
+
+    compileOnly 'com.grinderwolf:slimeworldmanager-api:2.0.6-SNAPSHOT'
+
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+}
+
+test {
+    useJUnitPlatform()
+}
