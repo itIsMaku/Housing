@@ -7,12 +7,13 @@ import cz.maku.mommons.ExceptionResponse;
 import cz.maku.mommons.Mommons;
 import cz.maku.mommons.Response;
 import cz.maku.mommons.server.Server;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Function;
 
-public class HousingServer extends Server {
+public class HousingServer extends Server implements Comparable<HousingServer> {
 
     public HousingServer(Server server) {
         super(server.getId(), server.getCachedData(), server.getLocalData());
@@ -57,5 +58,10 @@ public class HousingServer extends Server {
             plots.remove(plot);
             return plots;
         });
+    }
+
+    @Override
+    public int compareTo(@NotNull HousingServer o) {
+        return getLoadedPlots().size() - o.getLoadedPlots().size();
     }
 }

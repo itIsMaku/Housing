@@ -1,11 +1,17 @@
 package cz.maku.housing.shared;
 
+import java.util.Random;
+
 public class HousingConfiguration {
 
-    public static final String HOUSING_PLOT_LOADER_KEY = "housing-plot-loader";
+    public final static  Random RANDOM = new Random();
+
+    public final static String HOUSING_PLOT_LOADER_KEY = "housing-plot-loader";
     public final static String HOUSING_TOKEN_ACTION_LOAD = "housing-load";
+    public final static String HOUSING_TOKEN_ACTION_CONNECT = "housing-connect";
     public final static String HOUSING_TOKEN_ACTION_DESTROY = "housing-destroy";
     public final static String HOUSING_TOKEN_DATA_PLOT_ID = "housing-plot-id";
+    public final static String HOUSING_TOKEN_DATA_CONNECT_PLAYER = "housing-connect-player";
     public final static String HOUSING_SERVER_CLOUD_PLOTS = "housing-server-plots";
     public final static int HOUSING_SERVER_MAX_PLOTS = 3;
     public final static int HOUSING_READY_SERVERS = 2;

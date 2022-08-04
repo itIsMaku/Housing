@@ -28,8 +28,8 @@ dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
 
     implementation 'cz.maku:SpigotContainers:1.0-SNAPSHOT'
-    implementation 'cz.maku:Mommons:1.2'
-    annotationProcessor 'cz.maku:Mommons:1.2'
+    implementation 'cz.maku:Mommons:1.2.1'
+    annotationProcessor 'cz.maku:Mommons:1.2.1'
     implementation 'com.github.ZorTik:ContainrGUI:0.1.7'
 
     compileOnly 'org.projectlombok:lombok:1.18.24'

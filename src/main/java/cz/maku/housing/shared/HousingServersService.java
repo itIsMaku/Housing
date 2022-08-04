@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 
 @Service(scheduled = true)
 public class HousingServersService {
@@ -27,11 +30,48 @@ public class HousingServersService {
     @Load
     private NetworkTokenService networkTokenService;
 
+    public CompletableFuture<Optional<HousingServer>> getAvailableServerAsync() {
+        return CompletableFuture.supplyAsync(this::getAvailableServer);
+    }
+
+    public List<HousingServer> getHousingServers() {
+        return ServerData.getServersByType("housing").values()
+                .stream()
+                .map(HousingServer::new)
+                .toList();
+    }
+
+    public List<HousingServer> getHousingServersByCondition(Predicate<? super HousingServer> condition) {
+        return ServerData.getServersByType("housing").values()
+                .stream()
+                .map(HousingServer::new)
+                .filter(condition)
+                .toList();
+    }
+
+    public Optional<HousingServer> getAvailableServer() {
+        List<HousingServer> housingServers = getHousingServersByCondition(housingServer -> housingServer.getLoadedPlots().size() < HousingConfiguration.HOUSING_SERVER_MAX_PLOTS);
+        if (housingServers.isEmpty()) {
+            return Optional.empty();
+        }
+        List<HousingServer> notEmptyServers = housingServers.stream()
+                .filter(housingServer -> !housingServer.getLoadedPlots().isEmpty())
+                .toList();
+        if (notEmptyServers.size() < 1) {
+            return Optional.ofNullable(housingServers.get(HousingConfiguration.RANDOM.nextInt(housingServers.size())));
+        }
+
+        housingServers.sort(HousingServer::compareTo);
+        return Optional.of(housingServers.get(0));
+    }
+
     @Repeat(delay = 20, period = 20 * 60)
     @Async
     public void serversWorker() {
-        List<HousingServer> housingServers = ServerData.getServersByType("housing").values().stream().map(HousingServer::new).toList();
-        List<HousingServer> emptyServers = housingServers.stream().filter(housingServer -> housingServer.getLoadedPlots().isEmpty()).toList();
+        List<HousingServer> housingServers = getHousingServers();
+        List<HousingServer> emptyServers = housingServers.stream()
+                .filter(housingServer -> housingServer.getLoadedPlots().isEmpty())
+                .toList();
         housingServers.removeIf(housingServer -> housingServer.getLoadedPlots().size() >= HousingConfiguration.HOUSING_SERVER_MAX_PLOTS);
 
         int emptyPlots = 0;

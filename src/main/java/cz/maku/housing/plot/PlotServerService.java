@@ -3,6 +3,7 @@ package cz.maku.housing.plot;
 import cz.maku.housing.Rests;
 import cz.maku.housing.shared.HousingConfiguration;
 import cz.maku.mommons.Mommons;
+import cz.maku.mommons.player.CloudPlayer;
 import cz.maku.mommons.token.NetworkTokenService;
 import cz.maku.mommons.worker.annotation.Initialize;
 import cz.maku.mommons.worker.annotation.Load;
@@ -25,6 +26,10 @@ public class PlotServerService {
     public void tokenActions() {
         networkTokenService.addAction(HousingConfiguration.HOUSING_TOKEN_ACTION_LOAD, networkTokenAction -> {
             Map<String, String> data = networkTokenAction.getData();
+            String plotId = data.get(HousingConfiguration.HOUSING_TOKEN_DATA_PLOT_ID);
+            String playerConnect = data.get(HousingConfiguration.HOUSING_TOKEN_DATA_CONNECT_PLAYER);
+            plotContainersService.load();
+
             //String id = data.get(HousingConfiguration.HOUSING_TOKEN_DATA_PLOT_ID);
             //plotContainersService.load(id);
         });
