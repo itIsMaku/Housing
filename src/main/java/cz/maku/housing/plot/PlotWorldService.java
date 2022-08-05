@@ -28,7 +28,10 @@ import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
@@ -83,9 +86,9 @@ public class PlotWorldService {
                 return null;
             }
         }).thenAccept(schematicFile -> {
-           if (schematicFile == null) {
-               return;
-           }
+            if (schematicFile == null) {
+                return;
+            }
             Clipboard clipboard;
 
             ClipboardFormat format = ClipboardFormats.findByFile(schematicFile.getValue());

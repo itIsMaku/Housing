@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class HousingConfiguration {
 
-    public final static  Random RANDOM = new Random();
+    public final static Random RANDOM = new Random();
 
     public final static String HOUSING_PLOT_LOADER_KEY = "housing-plot-loader";
     public final static String HOUSING_TOKEN_ACTION_LOAD = "housing-load";

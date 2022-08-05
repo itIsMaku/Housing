@@ -1,8 +1,10 @@
 package cz.maku.housing.plot;
 
 import cz.maku.spigotcontainers.data.WorldRestrictedContainer;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
@@ -16,6 +18,10 @@ public class Plot {
     private final Map<String, String> data;
     @Nullable
     private WorldRestrictedContainer container;
+    @Nullable
+    @Getter(AccessLevel.PROTECTED)
+    @Setter(AccessLevel.PROTECTED)
+    private BukkitTask unloadTask;
 
     public Plot(String id, String owner, Map<String, String> data) {
         this.id = id;

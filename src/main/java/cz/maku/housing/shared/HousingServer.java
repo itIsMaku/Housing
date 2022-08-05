@@ -2,7 +2,6 @@ package cz.maku.housing.shared;
 
 import com.google.common.collect.Lists;
 import com.google.common.reflect.TypeToken;
-import cz.maku.housing.plot.Plot;
 import cz.maku.mommons.ExceptionResponse;
 import cz.maku.mommons.Mommons;
 import cz.maku.mommons.Response;
@@ -17,6 +16,11 @@ public class HousingServer extends Server implements Comparable<HousingServer> {
 
     public HousingServer(Server server) {
         super(server.getId(), server.getCachedData(), server.getLocalData());
+    }
+
+    @NotNull
+    public static HousingServer local() {
+        return new HousingServer(Server.local());
     }
 
     public List<String> getLoadedPlots() {

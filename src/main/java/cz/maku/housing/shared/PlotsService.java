@@ -18,7 +18,8 @@ public class PlotsService {
                 .map(row -> {
                     String owner = row.getString("owner");
                     String data = row.getString("data");
-                    return new Plot(id, owner, Mommons.GSON.fromJson(data, new TypeToken<Map<String, String>>(){}.getType()));
+                    return new Plot(id, owner, Mommons.GSON.fromJson(data, new TypeToken<Map<String, String>>() {
+                    }.getType()));
                 })
                 .findAny();
     }

@@ -25,8 +25,10 @@ public class HousingApplication extends WorkerPlugin {
     }
 
     @Override
-    public void onLoad() {}
+    public void onLoad() {
+    }
 
     @Override
-    public void onUnload() {}
+    public void onUnload() {
+    }
 }

@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 @Service
 public class HousingConnectionService {
@@ -43,7 +42,7 @@ public class HousingConnectionService {
             List<HousingServer> housingServers = housingServersService.getHousingServers();
             HousingServer plotServer = null;
             for (HousingServer housingServer : housingServers) {
-                if (housingServer.getLoadedPlots().stream().map(Plot::getId).collect(Collectors.toList()).contains(plot.getId())) {
+                if (housingServer.getLoadedPlots().contains(plot.getId())) {
                     plotServer = housingServer;
                 }
             }

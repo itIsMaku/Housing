@@ -3,7 +3,6 @@ package cz.maku.housing.shared;
 import com.google.common.collect.Maps;
 import cz.maku.housing.HousingApplication;
 import cz.maku.housing.rest.Rests;
-import cz.maku.housing.plot.Plot;
 import cz.maku.mommons.ExceptionResponse;
 import cz.maku.mommons.Mommons;
 import cz.maku.mommons.Response;
