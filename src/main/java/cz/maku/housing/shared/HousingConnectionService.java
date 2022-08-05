@@ -27,10 +27,10 @@ public class HousingConnectionService {
 
     @Initialize
     private void tokenActions() {
-        networkTokenService.addAction(HousingConfiguration.HOUSING_TOKEN_ACTION_LOAD, networkTokenAction -> {
+        networkTokenService.addAction(HousingConfiguration.HOUSING_TOKEN_ACTION_CONNECT_RESPONSE, networkTokenAction -> {
             Map<String, String> data = networkTokenAction.getData();
             String targetServer = data.get("server");
-            String player = data.get("player");
+            String player = data.get(HousingConfiguration.HOUSING_TOKEN_DATA_CONNECT_PLAYER);
             CloudPlayer cloudPlayer = CloudPlayer.getInstance(player);
             if (cloudPlayer != null) {
                 cloudPlayer.connect(targetServer);
@@ -48,7 +48,25 @@ public class HousingConnectionService {
                 }
             }
             if (plotServer != null) {
-                //todo: server neni null, pripoj se na parcelu
+                networkTokenService.sendToken(
+                        plotServer.getId(),
+                        Token.of(
+                                HousingConfiguration.HOUSING_TOKEN_ACTION_CONNECT,
+                                Map.of(
+                                        HousingConfiguration.HOUSING_TOKEN_DATA_PLOT_ID, plot.getId(),
+                                        HousingConfiguration.HOUSING_TOKEN_DATA_CONNECT_PLAYER, cloudPlayer.getNickname()
+                                )
+                        ),
+                        10,
+                        ChronoUnit.SECONDS
+                ).thenAccept(response -> {
+                    if (!Response.isValid(response)) {
+                        ExceptionResponse exceptionResponse = Response.getExceptionResponse(response);
+                        if (exceptionResponse != null) {
+                            exceptionResponse.getException().printStackTrace();
+                        }
+                    }
+                });
                 return;
             }
             Optional<HousingServer> optionalHousingServer = housingServersService.getAvailableServer();
@@ -57,7 +75,7 @@ public class HousingConnectionService {
             }
             HousingServer housingServer = optionalHousingServer.get();
             cloudPlayer.setLocalValue("connect", housingServer.getId());
-            Response response = networkTokenService.sendToken(
+            networkTokenService.sendToken(
                     housingServer.getId(),
                     Token.of(
                             HousingConfiguration.HOUSING_TOKEN_ACTION_LOAD,
@@ -68,14 +86,14 @@ public class HousingConnectionService {
                     ),
                     10,
                     ChronoUnit.SECONDS
-            ).get();
-            if (!Response.isValid(response)) {
-                ExceptionResponse exceptionResponse = Response.getExceptionResponse(response);
-                if (exceptionResponse != null) {
-                    exceptionResponse.getException().printStackTrace();
+            ).thenAccept(response -> {
+                if (!Response.isValid(response)) {
+                    ExceptionResponse exceptionResponse = Response.getExceptionResponse(response);
+                    if (exceptionResponse != null) {
+                        exceptionResponse.getException().printStackTrace();
+                    }
                 }
-                return;
-            }
+            });
         });
     }
 

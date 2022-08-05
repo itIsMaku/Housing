@@ -19,21 +19,21 @@ public class HousingServer extends Server implements Comparable<HousingServer> {
         super(server.getId(), server.getCachedData(), server.getLocalData());
     }
 
-    public List<Plot> getLoadedPlots() {
+    public List<String> getLoadedPlots() {
         Object raw = getCloudValue(HousingConfiguration.HOUSING_SERVER_CLOUD_PLOTS);
         if (raw == null) {
             return Lists.newArrayList();
         }
         return Mommons.GSON.fromJson(
                 (String) raw,
-                new TypeToken<List<Plot>>() {
+                new TypeToken<List<String>>() {
                 }.getType()
         );
     }
 
-    public void transactionLoadedPlotsAsync(Function<List<Plot>, List<Plot>> transaction) {
+    public void transactionLoadedPlotsAsync(Function<List<String>, List<String>> transaction) {
         CompletableFuture.runAsync(() -> {
-            List<Plot> loadedPlots = getLoadedPlots();
+            List<String> loadedPlots = getLoadedPlots();
             loadedPlots = transaction.apply(loadedPlots);
             setCloudValue(HousingConfiguration.HOUSING_SERVER_CLOUD_PLOTS, Mommons.GSON.toJson(loadedPlots)).thenAccept(response -> {
                 if (!Response.isValid(response)) {
@@ -46,14 +46,14 @@ public class HousingServer extends Server implements Comparable<HousingServer> {
         });
     }
 
-    public void addLoadedPlotsAsync(Plot plot) {
+    public void addLoadedPlotsAsync(String plot) {
         transactionLoadedPlotsAsync(plots -> {
             plots.add(plot);
             return plots;
         });
     }
 
-    public void removeLoadedPlotsAsync(Plot plot) {
+    public void removeLoadedPlotsAsync(String plot) {
         transactionLoadedPlotsAsync(plots -> {
             plots.remove(plot);
             return plots;

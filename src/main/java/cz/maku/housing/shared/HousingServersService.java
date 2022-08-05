@@ -2,7 +2,7 @@ package cz.maku.housing.shared;
 
 import com.google.common.collect.Maps;
 import cz.maku.housing.HousingApplication;
-import cz.maku.housing.Rests;
+import cz.maku.housing.rest.Rests;
 import cz.maku.housing.plot.Plot;
 import cz.maku.mommons.ExceptionResponse;
 import cz.maku.mommons.Mommons;
@@ -76,7 +76,7 @@ public class HousingServersService {
 
         int emptyPlots = 0;
         for (HousingServer housingServer : housingServers) {
-            List<Plot> loadedPlots = housingServer.getLoadedPlots();
+            List<String> loadedPlots = housingServer.getLoadedPlots();
             if (loadedPlots.isEmpty()) {
                 emptyPlots = emptyPlots + HousingConfiguration.HOUSING_SERVER_MAX_PLOTS;
                 continue;
