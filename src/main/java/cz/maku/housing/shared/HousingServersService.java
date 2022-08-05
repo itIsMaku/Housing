@@ -119,7 +119,7 @@ public class HousingServersService {
             Map<String, String> data = Maps.newHashMap();
             data.put("name", HousingConfiguration.DYNAMIC_SERVERS_SERVER_PREFIX + RandomStringUtils.randomAlphabetic(8));
             data.put("source", HousingConfiguration.DYNAMIC_SERVERS_SERVER_SOURCE);
-            data.put("onlineMod", "false");
+            data.put("onlineMode", "false");
             data.put("parameters", "-javaagent:classmodifier.jar");
             try {
                 Response response = Rests.post(HousingConfiguration.DYNAMIC_SERVERS_BOOT_ENDPOINT, Mommons.GSON.toJson(data));

@@ -15,6 +15,7 @@ public class HousingConfiguration {
     public final static String HOUSING_TOKEN_DATA_CONNECT_PLAYER = "housing-connect-player";
     public final static String HOUSING_SERVER_CLOUD_PLOTS = "housing-server-plots";
     public final static String HOUSING_SQL_PLOTS_TABLE = "housing_plots";
+    public final static String HOUSING_SQL_THEMES_TABLE = "housing_themes";
     public final static int HOUSING_SERVER_MAX_PLOTS = 3;
     public final static int HOUSING_READY_SERVERS = 2;
 

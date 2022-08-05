@@ -16,6 +16,7 @@ import com.sk89q.worldedit.function.operation.Operations;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldedit.regions.CuboidRegion;
 import com.sk89q.worldedit.session.ClipboardHolder;
+import cz.maku.housing.AddonData;
 import cz.maku.housing.rest.Rests;
 import cz.maku.housing.shared.HousingConfiguration;
 import cz.maku.housing.shared.PlotsService;
@@ -74,7 +75,7 @@ public class PlotWorldService {
     }
 
     public void loadSchematic(Plot plot) {
-        Map<String, String> data = plot.getData();
+        AddonData data = plot.getData();
         int minX = Integer.parseInt(data.get("min-x"));
         int minY = Integer.parseInt(data.get("min-y"));
         int minZ = Integer.parseInt(data.get("max-z"));
@@ -109,7 +110,7 @@ public class PlotWorldService {
 
     @SneakyThrows
     public void saveSchematic(Plot plot) {
-        Map<String, String> data = plot.getData();
+        AddonData data = plot.getData();
         int maxX = Integer.parseInt(data.get("max-x"));
         int maxY = Integer.parseInt(data.get("max-y"));
         int maxZ = Integer.parseInt(data.get("max-z"));
